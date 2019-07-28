@@ -8,7 +8,7 @@ export KUBEM2_IP=192.168.10.13
 export KUBEM3_IP=192.168.10.14
 export CLUSTER_IP=192.168.10.24
 export PEER_NAME=$(hostname)
-export PRIVATE_IP=$(ip addr show eth1 | grep -Po 'inet \K[\d.]+' | head -1)
+export PRIVATE_IP=$(ip addr show eth0| grep -Po 'inet \K[\d.]+' | head -1)
 echo $KUBEM1_NAME $KUBEM2_NAME $KUBEM3_NAME $KUBEM1_IP $KUBEM2_IP $KUBEM3_IP $CLUSTER_IP $PEER_NAME $PRIVATE_IP
 ```
 
