@@ -28,8 +28,8 @@ vrrp_instance VI_1 {
         auth_pass sqP05dQgMSlzrxHj
     }
     unicast_peer {
-        192.168.4.240
-        192.168.4.241
+        192.168.10.13
+        192.168.10.14
     }
     virtual_ipaddress {
         ${CLUSTER_IP}/24
