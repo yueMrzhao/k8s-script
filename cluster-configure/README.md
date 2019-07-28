@@ -3,10 +3,10 @@
 export KUBEM1_NAME=kubem1
 export KUBEM2_NAME=kubem2
 export KUBEM3_NAME=kubem3
-export KUBEM1_IP=192.168.4.240
-export KUBEM2_IP=192.168.4.241
-export KUBEM3_IP=192.168.4.242
-export CLUSTER_IP=192.168.4.245
+export KUBEM1_IP=192.168.10.12
+export KUBEM2_IP=192.168.10.13
+export KUBEM3_IP=192.168.10.14
+export CLUSTER_IP=192.168.10.24
 export PEER_NAME=$(hostname)
 export PRIVATE_IP=$(ip addr show eth1 | grep -Po 'inet \K[\d.]+' | head -1)
 echo $KUBEM1_NAME $KUBEM2_NAME $KUBEM3_NAME $KUBEM1_IP $KUBEM2_IP $KUBEM3_IP $CLUSTER_IP $PEER_NAME $PRIVATE_IP
@@ -14,18 +14,18 @@ echo $KUBEM1_NAME $KUBEM2_NAME $KUBEM3_NAME $KUBEM1_IP $KUBEM2_IP $KUBEM3_IP $CL
 
 # 安装预设 (如果是 Vagrant 提供 Virtual 不需要重复执行)
 
-wget -O centos7-setting.sh https://raw.githubusercontent.com/laik/k8s-script/master/centos7-setting.sh && sh centos7-setting.sh
+wget -O centos7-setting.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/centos7-setting.sh && sh centos7-setting.sh
 
-wget -O docker-ce.sh https://raw.githubusercontent.com/laik/k8s-script/master/docker-ce.sh && sh docker-ce.sh
+wget -O docker-ce.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/docker-ce.sh && sh docker-ce.sh
 
-wget -O kubelet.sh https://raw.githubusercontent.com/laik/k8s-script/master/kubelet.sh && sh kubelet.sh
+wget -O kubelet.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/kubelet.sh && sh kubelet.sh
 
 echo "执行下载镜像脚本"
 ```
 MY_PASSWORD=SASE!@#!#!RDA
 docker login --username=etransk8s --password=${MY_PASSWORD} registry.cn-hangzhou.aliyuncs.com
 ```
-wget -O k8s-dev.sh https://raw.githubusercontent.com/laik/k8s-script/master/k8s-dev.sh && chmod +x k8s-dev.sh && sh k8s-dev.sh && cd ~
+wget -O k8s-dev.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/k8s-dev.sh && chmod +x k8s-dev.sh && sh k8s-dev.sh && cd ~
 
 
 
@@ -57,7 +57,7 @@ export PATH=$PATH:/usr/local/bin
 # kubeadm 启动
 ```
 cd /etc/kubernetes/
-wget https://raw.githubusercontent.com/laik/k8s-script/master/cluster-configure/kubeadm-init-config.sh
+wget https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/kubeadm-init-config.sh
 sh kubeadm-init-config.sh
 kubeadm init --config kubeadm-init-config.yaml
 ```
@@ -85,7 +85,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 ## 用 Calico 作为网络传输层
 
-kubectl apply -f https://raw.githubusercontent.com/laik/k8s-script/master/calico.yaml
+kubectl apply -f https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/calico.yaml
 
 ####或者
 
@@ -98,10 +98,10 @@ kubectl create -f calico.yaml
 ```
 
 # heapster
-kubectl create -f https://raw.githubusercontent.com/laik/k8s-script/master/cluster-configure/heapster-all.yaml
+kubectl create -f https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/heapster-all.yaml
 
 # dashboard
-kubectl create -f https://raw.githubusercontent.com/laik/k8s-script/master/cluster-configure/kubernetes-dashboard.yaml
+kubectl create -f https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/kubernetes-dashboard.yaml
 
 # 获取token,通过令牌登陆
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
@@ -119,7 +119,7 @@ scp -r /etc/kubernetes/pki  ${KUBEM3_NAME}:/etc/kubernetes/
 # kubem2 & kubem3使用同一份配置文件初始化加入集群 Master
 ```
 cd /etc/kubernetes/
-wget https://raw.githubusercontent.com/laik/k8s-script/master/cluster-configure/kubeadm-init-config.sh
+wget https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/kubeadm-init-config.sh
 sh kubeadm-init-config.sh
 kubeadm init --config kubeadm-init-config.yaml
 ```
