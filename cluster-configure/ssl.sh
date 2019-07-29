@@ -58,8 +58,8 @@ cat > etcd-csr.json <<EOF
   "names": [
     {
       "C": "CN",
-      "ST": "shanghai",
-      "L": "shanghai",
+      "ST": "guangzhou",
+      "L": "guangzhou",
       "O": "k8s",
       "OU": "System"
     }
