@@ -140,3 +140,6 @@ nodes is forbidden: User "system:anonymous" cannot list nodes at the cluster sco
 解决办法如下：
    kubectl create clusterrolebinding system:anonymous   --clusterrole=cluster-admin   --user=system:anonymous
 ```
+
+# 加入node
+      kubeadm join 192.168.4.9:6443 --token nk8zy3.ijvmqfmppxevzv6f --discovery-token-ca-cert-hash sha256:ff3a769a689a25d3a573e25ca6e67b07fec07bf4bfcbd66ffae0d5cf33f5f3e8
