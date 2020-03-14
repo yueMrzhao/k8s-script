@@ -12,7 +12,7 @@ export PRIVATE_IP=$(ip addr show eth0| grep -Po 'inet \K[\d.]+' | head -1)
 echo $KUBEM1_NAME $KUBEM2_NAME $KUBEM3_NAME $KUBEM1_IP $KUBEM2_IP $KUBEM3_IP $CLUSTER_IP $PEER_NAME $PRIVATE_IP
 ```
 
-# 安装预设 (如果是 Vagrant 提供 Virtual 不需要重复执行)
+# 安装预设 (如果是 Vagrant 提供 Virtual 不需要重复执行)(几个节点都执行）
 
 wget -O centos7-setting.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/centos7-setting.sh && sh centos7-setting.sh
 
@@ -49,12 +49,12 @@ chmod +x /usr/local/bin/cfssl*
 export PATH=$PATH:/usr/local/bin
 ```
 
-参考 ssl.sh
+参考 ssl.sh （在一个节点执行）
 
 # ETCD 配置
 参考 etcd.sh
 
-# kubeadm 启动
+# kubeadm 启动 （在一个节点执行）
 ```
 cd /etc/kubernetes/
 wget https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/kubeadm-init-config.sh
@@ -67,7 +67,7 @@ kubeadm init --config kubeadm-init-config.yaml
 # cd /root/ssl && mkdir -p /etc/kubernetes/pki/etcd/ && cp etcd.pem etcd-key.pem ca.pem  /etc/kubernetes/pki/etcd/
 ```
 
-# 对于root用户 直接放到~/.bash_bashrc
+# 对于root用户 直接放到~/.bash_bashrc （一个节点执行）
 ```
 export KUBECONFIG=/etc/kubernetes/admin.conf && echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> ~/.bashrc
 ```
@@ -132,4 +132,11 @@ kubeadm token create --print-join-command
 ```
 kubectl proxy --address='0.0.0.0'  --accept-hosts='^*$'
 curl -X GET -L http://14.29.231.232:8001/
+```
+
+# 如果存在下面报错
+```
+nodes is forbidden: User "system:anonymous" cannot list nodes at the cluster scope
+解决办法如下：
+   kubectl create clusterrolebinding system:anonymous   --clusterrole=cluster-admin   --user=system:anonymous
 ```
