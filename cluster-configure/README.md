@@ -1,4 +1,4 @@
-# 全局配置脚本
+# 全局配置脚本 （从节点不用执行）
 ```
 export KUBEM1_NAME=kubem1
 export KUBEM2_NAME=kubem2
@@ -29,7 +29,7 @@ wget -O k8s-dev.sh https://raw.githubusercontent.com/yueMrzhao/k8s-script/master
 
 
 
-# 配置keepalived 
+# 配置keepalived （从节点不用执行）
 参考 keepalived.sh
 
 # 配置 ssl(必要配置)
@@ -52,7 +52,7 @@ export PATH=$PATH:/usr/local/bin
 参考 ssl.sh （在一个节点执行）
 
 # ETCD 配置
-参考 etcd.sh
+参考 etcd.sh （从节点不用执行）
 
 # kubeadm 启动 （在一个节点执行）
 ```
@@ -109,14 +109,14 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 
 
-# 初始化 m2 m3,将kubeadm生成证书密码文件分发到 kubem2 和 kubem3 上面去
+# 初始化 m2 m3,将kubeadm生成证书密码文件分发到 kubem2 和 kubem3 上面去（从节点不用执行）
 
 ``` 
 scp -r /etc/kubernetes/pki  ${KUBEM2_NAME}:/etc/kubernetes/
 scp -r /etc/kubernetes/pki  ${KUBEM3_NAME}:/etc/kubernetes/
 ```
 
-# kubem2 & kubem3使用同一份配置文件初始化加入集群 Master
+# kubem2 & kubem3使用同一份配置文件初始化加入集群 Master（从节点不用执行）
 ```
 cd /etc/kubernetes/
 wget https://raw.githubusercontent.com/yueMrzhao/k8s-script/master/cluster-configure/kubeadm-init-config.sh
